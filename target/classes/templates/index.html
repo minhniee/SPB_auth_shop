@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Call Example</title>
+</head>
+<body>
+<h1>API Call Example</h1>
+<p id="message">Click the button to fetch data!</p>
+<button onclick="fetchData()">Fetch Data</button>
+<pre id="output"></pre>
+
+<script>
+    // Declare an array to store API data
+    let dataArray = [];
+
+    function fetchData() {
+        // Replace with the API endpoint you want to call
+        const apiUrl = 'http://localhost:8082/api/v1/products/all';
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Assign the fetched data to the array
+                dataArray = data;
+
+                // Display the data in the HTML element with ID 'output'
+                document.getElementById('output').textContent = JSON.stringify(dataArray, null, 2);
+
+                // Update the message
+                document.getElementById('message').textContent = 'Data fetched successfully!';
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+</script>
+</body>
+</html>
